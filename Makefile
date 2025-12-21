@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = pipex
-SRCS = src/pipex.c src/utils.c\
+SRCS = src/pipex.c src/utils.c
 
 all: $(NAME)
 
@@ -17,9 +17,11 @@ $(NAME): $(OBJS)
 clean:
 	@rm -f $(OBJS)
 	@make clean -s -C libft
+
 fclean: clean
 	@make fclean -s -C libft
 	@rm -f $(NAME)
+
 re: fclean all
 
 .PHONY: all clean fclean re
