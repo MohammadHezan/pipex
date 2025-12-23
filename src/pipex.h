@@ -6,7 +6,7 @@
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:01:22 by nqasem            #+#    #+#             */
-/*   Updated: 2025/12/21 22:18:46 by mhaizan          ###   ########.fr       */
+/*   Updated: 2025/12/21 22:22:51 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int		word_count(char const *s, char c);
 int		ft_execve(char *file, char **ev);
 int		get_path(char **ev);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_execve(char *file, char **ev);
 void	free_it_now(char **s, char *s2, int emassage);
 void	error_message(void);
 #endif

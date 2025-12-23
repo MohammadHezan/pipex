@@ -6,7 +6,7 @@
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:45:14 by mhaizan           #+#    #+#             */
-/*   Updated: 2025/09/07 14:40:33 by mhaizan          ###   ########.fr       */
+/*   Updated: 2025/08/26 15:01:30 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,4 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)(result * sign));
-}
-#include <stdio.h>
-
-int	main()
-{
-	char *s = "234983249";
-	int n = ft_atoi(s);
-	printf("%d", n);
 }
