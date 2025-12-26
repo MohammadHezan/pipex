@@ -1,26 +1,26 @@
-CC = cc
+CC = @cc
 CFLAGS = -Wall -Wextra -Werror
+RM = @rm -rf
 NAME = pipex
-SRCS = src/pipex.c src/utils.c
+SRCS = srcs/Hpipex.c srcs/Hutils.c
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-CC = @cc
-RM = @rm -f
-
-OBJS =  $(SRCS:.c=.o)
-
 $(NAME): $(OBJS)
 	@make -s -C libft
-	@cc $(CFLAGS) $(SRCS) -o $(NAME) -Llibft -lft
+	$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
-	@make clean -s -C libft
+	$(RM) $(OBJS)
+	@make -s clean -C libft
 
 fclean: clean
-	@make fclean -s -C libft
-	@rm -f $(NAME)
+	$(RM) $(NAME)
+	@make -s fclean -C libft
 
 re: fclean all
 
