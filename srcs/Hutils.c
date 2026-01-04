@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Hutils.c                                           :+:      :+:    :+:   */
+/*   Hutils.c                                           :-      ::::::::   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 20:49:22 by mhaizan           #+#    #+#             */
-/*   Updated: 2025/12/26 21:14:53 by mhaizan          ###   ########.fr       */
+/*   Updated: 2026/01/04 19:14:38 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*get_path(char *cmd, char **envp)
 	char	**paths;
 	char	*res;
 
+	if (!cmd)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
 	paths = get_paths_array(envp);
@@ -71,6 +73,18 @@ char	*get_path(char *cmd, char **envp)
 	return (res);
 }
 
+void	ft_execve_cmd(char *path, char **envp)
+{
+	char	*const	argv[] = {path, NULL};
+
+	if (execve(path, (char **)argv, envp) == -1)
+	{
+		perror("execve");
+		free(path);
+		exit(1);
+	}
+}
+
 void	ft_execve(char **cmd, char **envp)
 {
 	char	*path;
@@ -78,15 +92,12 @@ void	ft_execve(char **cmd, char **envp)
 	path = get_path(cmd[0], envp);
 	if (!path)
 	{
-		fprintf(stderr, "%s: command not found\n", cmd[0]);
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, ": command not found\n", 21);
 		ft_free_split(cmd);
 		exit(127);
 	}
-	if (execve(path, cmd, envp) == -1)
-	{
-		perror("execve");
-		free(path);
-		ft_free_split(cmd);
-		exit(1);
-	}
+	ft_free_split(cmd);
+	ft_execve_cmd(path, envp);
 }
+

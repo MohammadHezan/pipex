@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad-hezan <mohammad-hezan@student.    +#+  +:+       +#+        */
+/*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:57:52 by mhaizan           #+#    #+#             */
-/*   Updated: 2025/12/26 16:48:29 by mohammad-he      ###   ########.fr       */
+/*   Updated: 2026/01/04 17:19:20 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

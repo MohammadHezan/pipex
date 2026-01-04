@@ -1,6 +1,6 @@
-CC = @cc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-RM = @rm -rf
+RM = rm -rf
 NAME = pipex
 SRCS = srcs/Hpipex.c srcs/Hutils.c
 OBJS = $(SRCS:.c=.o)
