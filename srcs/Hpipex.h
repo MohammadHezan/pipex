@@ -6,7 +6,7 @@
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 20:48:32 by mhaizan           #+#    #+#             */
-/*   Updated: 2026/01/04 19:33:48 by mhaizan          ###   ########.fr       */
+/*   Updated: 2026/01/06 18:44:19 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 void	ft_free_split(char **split);
 char	*find_in_paths(char **paths, char *cmd);
-char	**get_paths_array(char **envp);
 char	*get_path(char *cmd, char **envp);
 void	ft_execve(char **cmd, char **envp);
+int		ft_close(int *fd, char *word);
 
 void	child1(int *fd, char **argv, char **envp);
 void	child2(int *fd, char **argv, char **envp);

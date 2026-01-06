@@ -6,7 +6,7 @@
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:33:31 by mhaizan           #+#    #+#             */
-/*   Updated: 2026/01/04 19:39:24 by mhaizan          ###   ########.fr       */
+/*   Updated: 2026/01/06 19:24:52 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ void	child1(int *fd, char **argv, char **envp)
 		close(fd[1]);
 		exit(1);
 	}
-	dup2(infile, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
+	if (dup2(infile, STDIN_FILENO) == -1)
+		exit(1);
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		exit(1);
 	close(infile);
-	close(fd[0]);
-	close(fd[1]);
+	ft_close(fd, NULL);
 	execute_cmd(argv[2], envp);
 }
 
@@ -70,24 +71,38 @@ void	child2(int *fd, char **argv, char **envp)
 		close(fd[1]);
 		exit(1);
 	}
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
+	if (dup2(fd[0], STDIN_FILENO) == -1)
+		exit(1);
+	if (dup2(outfile, STDOUT_FILENO) == -1)
+		exit(1);
 	close(outfile);
-	close(fd[0]);
-	close(fd[1]);
+	ft_close(fd, NULL);
 	execute_cmd(argv[3], envp);
 }
 
-static int	parent_wait(pid_t pid1, pid_t pid2)
+static int	parent_wait(pid_t last_pid)
 {
-	int	status1;
-	int	status2;
+	int		status;
+	int		last_status;
+	pid_t	pid;
+	int		i;
 
-	waitpid(pid1, &status1, 0);
-	waitpid(pid2, &status2, 0);
-	if (WIFEXITED(status2))
-		return (WEXITSTATUS(status2));
-	return (1);
+	i = 0;
+	last_status = 0;
+	while (i < 2)
+	{
+		pid = waitpid(-1, &status, 0);
+		if (pid == -1)
+			break ;
+		if (pid == last_pid)
+			last_status = status;
+		i++;
+	}
+	if (WIFEXITED(last_status))
+		return (WEXITSTATUS(last_status));
+	if (WIFSIGNALED(last_status))
+		return (WTERMSIG(last_status) + 128);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -97,16 +112,22 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid2;
 
 	if (argc != 5)
-		return (write(2, "Invalid arguments\n", 18), -1);
+	{
+		write(2, "Invalid arguments\n", 18);
+		return (-1);
+	}
 	if (pipe(fd) == -1)
-		return (perror("Pipe failed"), -1);
+		return (ft_close(fd, "Pipe failed"));
 	pid1 = fork();
+	if (pid1 == -1)
+		return (ft_close(fd, "Fork failed"));
 	if (pid1 == 0)
 		child1(fd, argv, envp);
 	pid2 = fork();
 	if (pid2 == 0)
 		child2(fd, argv, envp);
-	close(fd[0]);
-	close(fd[1]);
-	return (parent_wait(pid1, pid2));
+	if (pid2 == -1)
+		return (ft_close(fd, "Fork failed"));
+	ft_close(fd, NULL);
+	return (parent_wait(pid2));
 }

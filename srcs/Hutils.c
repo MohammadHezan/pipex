@@ -6,7 +6,7 @@
 /*   By: mhaizan <mhaizan@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 20:49:22 by mhaizan           #+#    #+#             */
-/*   Updated: 2026/01/04 19:42:56 by mhaizan          ###   ########.fr       */
+/*   Updated: 2026/01/06 19:17:45 by mhaizan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	ft_free_split(char **split)
 	free(split);
 }
 
-char	**get_paths_array(char **envp)
+int	ft_close(int *fd, char *word)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
-		i++;
-	if (!envp[i])
-		return (NULL);
-	return (ft_split(envp[i] + 5, ':'));
+	if (fd)
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
+	if (word)
+		perror(word);
+	return (-1);
 }
 
 char	*find_in_paths(char **paths, char *cmd)
@@ -60,10 +60,16 @@ char	*get_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*res;
+	int		i;
 
+	i = 0;
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	paths = get_paths_array(envp);
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+		i++;
+	if (!envp[i])
+		return (NULL);
+	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		return (NULL);
 	res = find_in_paths(paths, cmd);
