@@ -9,7 +9,8 @@
   ![Language](https://img.shields.io/badge/Language-C-green)
   ![Norminette](https://img.shields.io/badge/Norminette-Passing-success)
   ![Type](https://img.shields.io/badge/Type-Systems%20Programming-orange)
-  
+  <img width="201" height="170" alt="Screenshot from 2026-02-06 13-35-10" src="https://github.com/user-attachments/assets/212019ec-2817-46a7-954e-de915d8a1239" />
+
   <p><strong>A 42 School Systems Programming Project by mhaizan</strong></p>
 </div>
 
